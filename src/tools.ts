@@ -80,4 +80,38 @@ export const tools = {
       return { elements };
     },
   }),
+  modifyDiagram: tool({
+    description:
+      "Modify an existing element on the canvas by id. Set only the fields you want to change. Leave everything else alone, please.",
+    inputSchema: z.object({
+      elementId: z.string().describe("The id of the element to modify."),
+      updates: z.object({
+        x: z.number().nullable().describe("New x position, or null"),
+        y: z.number().nullable().describe("New y position, or null"),
+        width: z.number().nullable().describe("New width, or null"),
+        height: z.number().nullable().describe("New height, or null"),
+        text: z
+          .string()
+          .nullable()
+          .describe("New label or text content, or null"),
+        fontSize: z.number().nullable(),
+        textAlign: z.enum(["left", "center", "right"]).nullable(),
+        strokeColor: z
+          .string()
+          .nullable()
+          .describe("Hex stroke color, or null"),
+        backgroundColor: z
+          .string()
+          .nullable()
+          .describe("Hex fill color, or null"),
+        fillStyle: z.enum(["solid", "hachure", "cross-hatch"]).nullable(),
+        strokeWidth: z.number().nullable(),
+        roughness: z.number().nullable(),
+        opacity: z.number().nullable(),
+      }),
+    }),
+    execute: async ({ elementId, updates }) => {
+      return { elementId, updates };
+    },
+  }),
 };
